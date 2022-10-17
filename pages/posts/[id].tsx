@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getAllPostIds, getPostData } from '../../lib/post';
-import Date from '../../components/Date/date'
+import Date from '../../components/Date/Date';
 
 interface IProps {
     // TODO

@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import { GetStaticProps } from "next";
 import { getSortedPostsData } from "../lib/post";
 import Link from 'next/link';
-import Date from '../components/Date/date';
+import Date from '../components/Date/Date';
 
 interface IProps {
     // TODO
