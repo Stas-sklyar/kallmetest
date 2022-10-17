@@ -5,7 +5,7 @@ interface IDateProps {
     dateString: string
 }
 
-const Date: NextPage = ({ dateString }: IDateProps) => {
+const Date: NextPage = ({ dateString }) => {
     const date = parseISO(dateString)
     return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>
 }
