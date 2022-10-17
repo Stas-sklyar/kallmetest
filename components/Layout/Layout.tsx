@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
-import React, {ReactElement} from "react";
+import React, { ReactElement } from "react";
 
-type ILayoutProps = {
+type IProps = {
     children: React.ReactNode
 }
 
-const Layout: NextPage = ({children}: ILayoutProps) => {
+const Layout: NextPage<IProps> = ({ children }) => {
 
     return (
         <>

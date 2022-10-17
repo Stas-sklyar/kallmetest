@@ -1,11 +1,11 @@
 import { parseISO, format } from 'date-fns';
 import { NextPage } from 'next';
 
-interface IDateProps {
+interface Props {
     dateString: string
 }
 
-const Date: NextPage = ({ dateString }) => {
+const Date: NextPage<Props> = ({ dateString }) => {
     const date = parseISO(dateString)
     return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>
 }

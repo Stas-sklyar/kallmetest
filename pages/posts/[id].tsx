@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { getAllPostIds, getPostData } from '../../lib/post';
 import Date from '../../components/Date/date'
 
-interface IPostProps {
+interface IProps {
     // TODO
     postData: any
 }
@@ -29,7 +29,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 }
 
-const Post: NextPage = ({ postData }: IPostProps) => {
+const Post: NextPage<IProps> = ({ postData }) => {
     return (
         <>
             <Head>
