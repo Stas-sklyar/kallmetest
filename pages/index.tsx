@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const allPostsData = getSortedPostsData();
     return {
         props: {
-            allPostsData,
+            allPostsData
         },
     };
 }
@@ -25,7 +25,7 @@ const Home: NextPage<IProps> = ({ allPostsData }) => {
             <>
                 <h1>Home</h1>
                 {
-                    allPostsData.map((post: any) => (
+                    allPostsData && allPostsData.map((post: any) => (
                         <div key={post.id}>
                             <Link href={`/posts/${post.id}`}>
                                 <a>{post.title}</a>
