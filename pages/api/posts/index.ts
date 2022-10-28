@@ -1,13 +1,58 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "../../../lib/mongodb";
+import connectMongo from "../../../lib/mongodb";
+import Post from "../../../models/post";
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
-  let { db } = await connectToDatabase();
+    switch (req.method) {
+        case 'GET':
+            return getPosts(req, res)
+        case 'POST':
+            return createPost(req, res)
+        default:
+            res.setHeader('Allow', ['GET', 'POST']);
+            res.status(405).end(`Method ${req.method} Not Allowed`);
+            break;
+    }
+}
 
-  const posts = await db.collection("next-app-colection").find().toArray();
+async function getPosts(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+        await connectMongo()
 
-  res.status(200).json({ posts });
+        const posts = await Post.find();
+
+        return res.json({
+            data: JSON.parse(JSON.stringify(posts)),
+            success: true,
+        });
+
+    } catch (error) {
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
+}
+
+
+async function createPost(req: NextApiRequest, res: NextApiResponse<any>) {
+    try {
+        await connectMongo()
+
+        await Post.create(req.body)
+
+        return res.json({
+            message: "Post successfully created!",
+            success: true,
+        });
+
+    } catch (error) {
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
 }

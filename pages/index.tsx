@@ -1,50 +1,43 @@
 import type { NextPage } from 'next'
 import Layout from "../components/Layout/Layout";
-import { GetStaticProps } from "next";
-import { getSortedPostsData } from "../lib/post";
+import { GetServerSideProps } from "next";
 import Link from 'next/link';
-import Date from '../components/Date/Date';
+import Post from '../models/post';
 
 interface IProps {
     // TODO
-    allPostsData: any
+    posts: any
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-    const res = await fetch('http://localhost:3000/api/posts', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
+export const getServerSideProps: GetServerSideProps = async () => {
+    const response = await fetch(`http://localhost:3000/api/posts`, {
+        method: 'GET'
     });
-    const allPostsData = await res.json();
-    console.log(allPostsData)
+
+    let parsedResponse = await response.json()
+
     return {
-        props: {
-            allPostsData: allPostsData.posts
-        },
+      props: {
+        posts: parsedResponse.data,
+      },
     };
 }
 
-const Home: NextPage<IProps> = ({ allPostsData }) => {
+const Home: NextPage<IProps> = ({ posts }) => {
     return (
         <Layout>
             <>
                 <h1>Home</h1>
                 {
-                    allPostsData && allPostsData.length > 0 && allPostsData.map((post: any) => (
-                        <div key={post.id}>
+                    posts && posts.length > 0 && posts.map((post: any) => (
+                        <div key={post._id}>
                             <Link href={`/posts/${post._id}`}>
                                 <a>{post.title}</a>
                             </Link>
                             <br></br>
-                            {/* <small>
-                                <Date dateString={post.date} />
-                            </small> */}
                             <hr></hr>
                         </div>
-                    )
-                    )
+                    ))
                 }
             </>
         </Layout>

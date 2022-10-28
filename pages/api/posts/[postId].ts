@@ -1,6 +1,8 @@
 import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "../../../lib/mongodb";
+import connectMongo, { connectToDatabase } from "../../../lib/mongodb";
+import Post from "../../../models/post"
 
 export default async function handler(
     req: NextApiRequest,
@@ -23,12 +25,15 @@ export default async function handler(
 
 async function getPost(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
-        let { db } = await connectToDatabase();
-        let post = db.collection("next-app-colection").find(ObjectId("4ecc05e55dd98a436ddcc47c")) 
+        await connectMongo()
+
+        const post = await Post.findOne({ "_id": req.query.postId?.toString() });
+
         return res.json({
-            message: JSON.parse(JSON.stringify(post)),
+            data: JSON.parse(JSON.stringify(post)),
             success: true,
         });
+
     } catch (error) {
         return res.json({
             message: new Error(error).message,
@@ -36,7 +41,6 @@ async function getPost(req: NextApiRequest, res: NextApiResponse<any>) {
         });
     }
 }
-
 
 function updatePost(req: NextApiRequest, res: NextApiResponse<any>) {
     throw new Error("Function not implemented.");
