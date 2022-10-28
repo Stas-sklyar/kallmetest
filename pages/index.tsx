@@ -11,10 +11,17 @@ interface IProps {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const allPostsData = getSortedPostsData();
+    const res = await fetch('http://localhost:3000/api/posts', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const allPostsData = await res.json();
+    console.log(allPostsData)
     return {
         props: {
-            allPostsData
+            allPostsData: allPostsData.posts
         },
     };
 }
@@ -25,15 +32,15 @@ const Home: NextPage<IProps> = ({ allPostsData }) => {
             <>
                 <h1>Home</h1>
                 {
-                    allPostsData && allPostsData.map((post: any) => (
+                    allPostsData && allPostsData.length > 0 && allPostsData.map((post: any) => (
                         <div key={post.id}>
-                            <Link href={`/posts/${post.id}`}>
+                            <Link href={`/posts/${post._id}`}>
                                 <a>{post.title}</a>
                             </Link>
                             <br></br>
-                            <small>
+                            {/* <small>
                                 <Date dateString={post.date} />
-                            </small>
+                            </small> */}
                             <hr></hr>
                         </div>
                     )
