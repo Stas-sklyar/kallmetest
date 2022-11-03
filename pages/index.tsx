@@ -3,6 +3,8 @@ import Layout from "../components/Layout/Layout";
 import { GetServerSideProps } from "next";
 import Link from 'next/link';
 import Post from '../models/post';
+import PostCard from '../components/PostCard/PostCard';
+import { Grid } from '@mui/material';
 
 interface IProps {
     // TODO
@@ -17,9 +19,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     let parsedResponse = await response.json()
 
     return {
-      props: {
-        posts: parsedResponse.data,
-      },
+        props: {
+            posts: parsedResponse.data,
+        },
     };
 }
 
@@ -28,17 +30,20 @@ const Home: NextPage<IProps> = ({ posts }) => {
         <Layout>
             <>
                 <h1>Home</h1>
-                {
-                    posts && posts.length > 0 && posts.map((post: any) => (
-                        <div key={post._id}>
-                            <Link href={`/posts/${post._id}`}>
-                                <a>{post.title}</a>
+                <Grid
+                    spacing={3}
+                    container
+                >
+                    {
+                        posts && posts.length > 0 && posts.map((post: any) => (
+                            <Link key={post._id} href={`/posts/${post._id}`}>
+                                <Grid item>
+                                    <PostCard post={post}></PostCard>
+                                </Grid>
                             </Link>
-                            <br></br>
-                            <hr></hr>
-                        </div>
-                    ))
-                }
+                        ))
+                    }
+                </Grid>
             </>
         </Layout>
     )
