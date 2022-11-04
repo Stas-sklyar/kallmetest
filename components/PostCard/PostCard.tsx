@@ -1,4 +1,4 @@
-import { CardActionArea, CardContent, Typography, Box } from '@mui/material';
+import { CardActionArea, CardContent, Typography, Box, CardHeader, CardMedia } from '@mui/material';
 import { FC } from 'react';
 import { Card } from 'react-bootstrap';
 
@@ -9,18 +9,21 @@ interface IProps {
 
 const PostCard: FC<IProps> = ({ post }) => {
     return (
-        <Box sx={{ width: 300 }}>
+        <Box>
             <Card>
-                <CardActionArea>
-                    <CardContent sx={{ color: "#111111" }}>
-                        <Typography gutterBottom variant="h5" component="h5">
-                            {post.title}
-                        </Typography>
-                        <Typography variant="body1">
-                            {post.content}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="180"
+                    image="https://via.placeholder.com/250x180?text=/"
+                />
+                <CardContent sx={{ color: "#111111", height: 320, textOverflow: "ellipsis" }}>
+                    <Typography gutterBottom variant="h5" component="h5">
+                        {post.title}
+                    </Typography>
+                    <Typography variant="body1">
+                        {post.content}
+                    </Typography>
+                </CardContent>
             </Card>
         </Box>
     )

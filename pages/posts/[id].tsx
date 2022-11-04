@@ -3,8 +3,9 @@ import Head from 'next/head'
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Layout from '../../components/Layout/Layout';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import ReactMarkdown from 'react-markdown'
+import Date from '../../components/Date/Date'
 
 interface IProps {
     // TODO
@@ -64,11 +65,26 @@ const Post: NextPage<IProps> = ({ postData }) => {
                     {postData.title}
                 </Typography>
 
-                <Typography
-                    variant="body2"
+                <Grid
+                    container
+                    justifyContent="space-between"
+                    sx={{ mb: 4 }}
                 >
-                    Post id: <i>{postData._id}</i>
-                </Typography>
+                    <Grid item>
+                        <Typography
+                            variant="body2"
+                        >
+                            Post id: <i>{postData._id}</i>
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            variant="body2"
+                        >
+                            Publish Date: <Date dateString={postData.publishDate} />
+                        </Typography>
+                    </Grid>
+                </Grid>
 
                 <Typography
                     variant="body1"
@@ -83,7 +99,7 @@ const Post: NextPage<IProps> = ({ postData }) => {
                     <Button>Go home</Button>
                 </Link>
             </Box>
-        </Layout>
+        </Layout >
     );
 }
 

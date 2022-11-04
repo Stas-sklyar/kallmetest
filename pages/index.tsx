@@ -43,7 +43,7 @@ const Home: NextPage<IProps> = ({ posts }) => {
                     {
                         posts && posts.length > 0 && posts.map((post: any) => (
                             <Link key={post._id} href={`/posts/${post._id}`}>
-                                <Grid item>
+                                <Grid item xs={3}>
                                     <PostCard post={post}></PostCard>
                                 </Grid>
                             </Link>

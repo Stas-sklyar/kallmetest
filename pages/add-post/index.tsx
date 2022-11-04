@@ -1,22 +1,29 @@
 import type { NextPage } from 'next';
 import Layout from '../../components/Layout/Layout';
 import TextField from '@mui/material/TextField';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography, Box } from '@mui/material';
 import { FormEvent, useState } from 'react';
 
 interface IProps {
 }
 
+interface IAddPostForm {
+    title: string;
+    content: string;
+    shortDescription: string;
+}
+
 const AddPost: NextPage<IProps> = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<IAddPostForm>({
         title: "",
+        shortDescription: "",
         content: ""
     })
 
     const createPost = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const response = await fetch(`http://localhost:3000/api/posts`, {
+        await fetch(`http://localhost:3000/api/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +34,7 @@ const AddPost: NextPage<IProps> = () => {
 
     return (
         <Layout>
-            <>
+            <Box sx={{ py: 5 }}>
                 <Typography
                     variant="h2"
                     component="h1"
@@ -42,13 +49,25 @@ const AddPost: NextPage<IProps> = () => {
                         rowSpacing={3}
                         container
                     >
-                        <Grid item>
+                        <Grid item xs={12}>
                             <TextField
                                 label="Post Title"
                                 variant="outlined"
                                 name="title"
                                 onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                                sx={{ width: "100%" }}
+                                required
+                            />
+                        </Grid>
 
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Short description for Post"
+                                variant="outlined"
+                                name="shortDescription"
+                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                                sx={{ width: "100%" }}
+                                required
                             />
                         </Grid>
 
@@ -59,23 +78,36 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Post Content"
                                 variant="outlined"
                                 name="content"
-                                sx={{width: "100%"}}
+                                sx={{ width: "100%" }}
+                                required
                                 onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
                             />
                         </Grid>
 
                         <Grid item>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                            >
-                                Add post
-                            </Button>
+                            <Grid container columnSpacing={5}>
+                                <Grid item>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                    >
+                                        Create and Publish
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        type="submit"
+                                        variant="outlined"
+                                    >
+                                        Save as Draft
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </form>
-            </>
-        </Layout>
+            </Box>
+        </Layout >
     )
 }
 

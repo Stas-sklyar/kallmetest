@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectMongo from "../../../lib/mongodb";
 import Post from "../../../models/post";
+import { IPostStatus } from "../../../models/PostStatus";
 
 export default async function handler(
     req: NextApiRequest,
@@ -41,8 +42,15 @@ async function getPosts(req: NextApiRequest, res: NextApiResponse<any>) {
 async function createPost(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
         await connectMongo()
+        console.log(req.body)
+        const newPost = new Post({
+            ...req.body,
+            craeteDate: new Date(),
+            status: IPostStatus.PUBLISHED,
+            publishDate: new Date()
+        })
 
-        await Post.create(req.body)
+        await newPost.save()
 
         return res.json({
             message: "Post successfully created!",
