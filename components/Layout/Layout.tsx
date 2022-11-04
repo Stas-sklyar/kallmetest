@@ -1,8 +1,7 @@
-import { Box, createTheme, CssBaseline } from '@mui/material';
+import { Box, Container, createTheme } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import type { NextPage } from 'next'
-import Link from 'next/link';
-import React, { ReactElement } from "react";
+import React, { FC } from "react";
+import Header from '../Header/Header';
 
 const darkTheme = createTheme({
     palette: {
@@ -14,22 +13,19 @@ type IProps = {
     children: React.ReactNode
 }
 
-const Layout: NextPage<IProps> = ({ children }) => {
+const Layout: FC<IProps> = ({ children }) => {
 
     return (
         <ThemeProvider theme={darkTheme}>
 
-            <header>
-                <Box sx={{ p: 2 }}>
-                    <Link href={"/"}>Home</Link>
-                    <Link href={"/add-post"}>Add post</Link>
-                </Box>
-            </header>
+            <Header />
 
             <main>
-                <Box sx={{ px: 2 }}>
-                    {children}
-                </Box>
+                <Container fixed>
+                    <Box sx={{ px: 2 }}>
+                        {children}
+                    </Box>
+                </Container>
             </main>
 
         </ThemeProvider>

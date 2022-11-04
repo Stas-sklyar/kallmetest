@@ -1,8 +1,9 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import s from './Post.module.scss'
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
+import Layout from '../../components/Layout/Layout';
+import { Typography } from '@mui/material';
 
 interface IProps {
     // TODO
@@ -46,23 +47,40 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const Post: NextPage<IProps> = ({ postData }) => {
     return (
-        <>
+        <Layout>
             <Head>
                 <title>{postData.title}</title>
-                <meta name="description" content="My first post 2" />
+                <meta name="description" content={postData.content} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <>
-                <h1 className={s["Post-Title"]}>{postData.title}</h1>
-                <h6>{postData._id}</h6>
-                <h2 className={s["Post-Content"]}>{postData.content}</h2>
+                <Typography
+                    variant="h2"
+                    component="h1"
+                    sx={{ mb: 3 }}
+                >
+                    {postData.title}
+                </Typography>
+
+                <Typography
+                    variant="body2"
+                >
+                    Post id: <i>{postData._id}</i>
+                </Typography>
+
+                <Typography
+                    variant="body1"
+                    sx={{ mb: 4 }}
+                >
+                    {postData.content}
+                </Typography>
 
                 <Link href="/">
                     <Button>Go home</Button>
                 </Link>
             </>
-        </>
+        </Layout>
     );
 }
 

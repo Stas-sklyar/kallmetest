@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Layout from '../../components/Layout/Layout';
 import TextField from '@mui/material/TextField';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { FormEvent, useState } from 'react';
 
 interface IProps {
@@ -28,7 +28,14 @@ const AddPost: NextPage<IProps> = () => {
     return (
         <Layout>
             <>
-                <h1>ADD POST</h1>
+                <Typography
+                    variant="h2"
+                    component="h1"
+                    sx={{ mb: 3 }}
+                >
+                    ADD POST
+                </Typography>
+                
                 <form onSubmit={(e) => createPost(e)}>
                     <Grid
                         direction="column"
@@ -44,7 +51,7 @@ const AddPost: NextPage<IProps> = () => {
                         </Grid>
 
                         <Grid item>
-                            <Button type="submin" variant="contained">Add post</Button>
+                            <Button type="submit" variant="contained">Add post</Button>
                         </Grid>
                     </Grid>
                 </form>

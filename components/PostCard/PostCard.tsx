@@ -1,5 +1,4 @@
-import { CardActionArea, CardMedia, CardContent, Typography, Box } from '@mui/material';
-import Link from 'next/link';
+import { CardActionArea, CardContent, Typography, Box } from '@mui/material';
 import { FC } from 'react';
 import { Card } from 'react-bootstrap';
 
@@ -13,7 +12,7 @@ const PostCard: FC<IProps> = ({ post }) => {
         <Box sx={{ width: 300 }}>
             <Card>
                 <CardActionArea>
-                    <CardContent sx={{ color: "#000000" }}>
+                    <CardContent sx={{ color: "#111111" }}>
                         <Typography gutterBottom variant="h5" component="h5">
                             {post.title}
                         </Typography>
