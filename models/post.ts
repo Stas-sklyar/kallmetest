@@ -30,6 +30,10 @@ const postSchema = new Schema({
         type: String,
         enum: IPostStatus,
         required: true
+    },
+    authorName: {
+        type: String,
+        require: true
     }
 });
 

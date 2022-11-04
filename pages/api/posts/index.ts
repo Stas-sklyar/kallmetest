@@ -42,12 +42,13 @@ async function getPosts(req: NextApiRequest, res: NextApiResponse<any>) {
 async function createPost(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
         await connectMongo()
-        console.log(req.body)
+
         const newPost = new Post({
             ...req.body,
             craeteDate: new Date(),
             status: IPostStatus.PUBLISHED,
-            publishDate: new Date()
+            publishDate: new Date(),
+            authorName: "Default Stas"
         })
 
         await newPost.save()

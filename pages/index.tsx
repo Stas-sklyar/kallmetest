@@ -3,8 +3,7 @@ import Layout from "../components/Layout/Layout";
 import { GetServerSideProps } from "next";
 import Link from 'next/link';
 import PostCard from '../components/PostCard/PostCard';
-import { Grid } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Typography, Box, Grid } from '@mui/material';
 
 interface IProps {
     // TODO
@@ -28,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const Home: NextPage<IProps> = ({ posts }) => {
     return (
         <Layout>
-            <>
+            <Box sx={{ my: 5 }}>
                 <Typography
                     variant="h2"
                     component="h1"
@@ -43,14 +42,14 @@ const Home: NextPage<IProps> = ({ posts }) => {
                     {
                         posts && posts.length > 0 && posts.map((post: any) => (
                             <Link key={post._id} href={`/posts/${post._id}`}>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     <PostCard post={post}></PostCard>
                                 </Grid>
                             </Link>
                         ))
                     }
                 </Grid>
-            </>
+            </Box>
         </Layout>
     )
 }
