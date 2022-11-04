@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Layout from '../../components/Layout/Layout';
 import TextField from '@mui/material/TextField';
 import { Button, Grid, Typography, Box } from '@mui/material';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface IProps {
 }
@@ -20,6 +20,10 @@ const AddPost: NextPage<IProps> = () => {
         content: ""
     })
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
     const createPost = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
@@ -30,6 +34,14 @@ const AddPost: NextPage<IProps> = () => {
             },
             body: JSON.stringify(form)
         })
+
+        setForm({
+            title: "",
+            shortDescription: "",
+            content: ""
+        })
+
+        alert("Post Published!")
     }
 
     return (
@@ -54,7 +66,8 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Post Title"
                                 variant="outlined"
                                 name="title"
-                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                                value={form.title}
+                                onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
                             />
@@ -65,7 +78,8 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Short description for Post"
                                 variant="outlined"
                                 name="shortDescription"
-                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                                value={form.shortDescription}
+                                onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
                             />
@@ -75,12 +89,13 @@ const AddPost: NextPage<IProps> = () => {
                             <TextField
                                 multiline
                                 rows={14}
-                                label="Post Content"
+                                label="Post Content (markdown supported)"
                                 variant="outlined"
                                 name="content"
+                                value={form.content}
+                                onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
-                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
                             />
                         </Grid>
 
