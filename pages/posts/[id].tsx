@@ -3,7 +3,8 @@ import Head from 'next/head'
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Layout from '../../components/Layout/Layout';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import ReactMarkdown from 'react-markdown'
 
 interface IProps {
     // TODO
@@ -54,7 +55,7 @@ const Post: NextPage<IProps> = ({ postData }) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <>
+            <Box sx={{ mb: 5 }}>
                 <Typography
                     variant="h2"
                     component="h1"
@@ -73,13 +74,15 @@ const Post: NextPage<IProps> = ({ postData }) => {
                     variant="body1"
                     sx={{ mb: 4 }}
                 >
-                    {postData.content}
+                    <ReactMarkdown>
+                        {postData.content}
+                    </ReactMarkdown>
                 </Typography>
 
                 <Link href="/">
                     <Button>Go home</Button>
                 </Link>
-            </>
+            </Box>
         </Layout>
     );
 }

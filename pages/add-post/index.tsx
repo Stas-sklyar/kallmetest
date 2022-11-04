@@ -35,7 +35,7 @@ const AddPost: NextPage<IProps> = () => {
                 >
                     ADD POST
                 </Typography>
-                
+
                 <form onSubmit={(e) => createPost(e)}>
                     <Grid
                         direction="column"
@@ -43,15 +43,34 @@ const AddPost: NextPage<IProps> = () => {
                         container
                     >
                         <Grid item>
-                            <TextField label="Post Title" variant="outlined" name="title" onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })} />
+                            <TextField
+                                label="Post Title"
+                                variant="outlined"
+                                name="title"
+                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                multiline
+                                rows={14}
+                                label="Post Content"
+                                variant="outlined"
+                                name="content"
+                                sx={{width: "100%"}}
+                                onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                            />
                         </Grid>
 
                         <Grid item>
-                            <TextField label="Post Content" variant="outlined" name="content" onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })} />
-                        </Grid>
-
-                        <Grid item>
-                            <Button type="submit" variant="contained">Add post</Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                            >
+                                Add post
+                            </Button>
                         </Grid>
                     </Grid>
                 </form>
