@@ -22,7 +22,7 @@ const Layout: FC<IProps> = ({ children }) => {
 
             <main>
                 <Container fixed>
-                    <Box sx={{ px: 2 }}>
+                    <Box>
                         {children}
                     </Box>
                 </Container>
