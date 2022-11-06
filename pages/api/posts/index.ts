@@ -47,8 +47,7 @@ async function createPost(req: NextApiRequest, res: NextApiResponse<any>) {
             ...req.body,
             craeteDate: new Date(),
             status: IPostStatus.PUBLISHED,
-            publishDate: new Date(),
-            authorName: "Default Stas"
+            publishDate: new Date()
         })
 
         await newPost.save()

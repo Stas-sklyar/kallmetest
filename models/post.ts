@@ -34,6 +34,10 @@ const postSchema = new Schema({
     authorName: {
         type: String,
         require: true
+    },
+    authorEmail: {
+        type: String,
+        require: true
     }
 });
 

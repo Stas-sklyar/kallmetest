@@ -1,8 +1,9 @@
 import type { NextPage } from 'next';
 import Layout from '../../components/Layout/Layout';
 import TextField from '@mui/material/TextField';
-import { Button, Grid, Typography, Box } from '@mui/material';
+import { Button, Grid, Typography, Box, CircularProgress } from '@mui/material';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSession, signIn } from 'next-auth/react'
 
 interface IProps {
 }
@@ -14,28 +15,48 @@ interface IAddPostForm {
 }
 
 const AddPost: NextPage<IProps> = () => {
-    const [form, setForm] = useState<IAddPostForm>({
+    const { data: session, status } = useSession()
+    console.log(session)
+
+    const [postData, setPostData] = useState<IAddPostForm>({
         title: "",
         shortDescription: "",
         content: ""
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value })
+        setPostData({ ...postData, [e.target.name]: e.target.value })
     }
 
     const createPost = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if (!session) {
+            alert("To publish a post, please register through github")
+            return
+        }
+
+        if (!postData.title && !postData.shortDescription && !postData.content) {
+            alert("please fillin all fields")
+            return
+        }
+
+        const authorData = {
+            authorName: session.user?.name || "",
+            authorEmail: session.user?.email || ""
+        }
 
         await fetch(`http://localhost:3000/api/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(form)
+            body: JSON.stringify(
+                Object.assign(postData, authorData)
+            )
         })
 
-        setForm({
+        setPostData({
             title: "",
             shortDescription: "",
             content: ""
@@ -46,7 +67,7 @@ const AddPost: NextPage<IProps> = () => {
 
     return (
         <Layout>
-            <Box sx={{ py: 5 }}>
+            {session && <Box sx={{ py: 5 }}>
                 <Typography
                     variant="h2"
                     component="h1"
@@ -66,7 +87,7 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Post Title"
                                 variant="outlined"
                                 name="title"
-                                value={form.title}
+                                value={postData.title}
                                 onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
@@ -78,7 +99,7 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Short description for Post"
                                 variant="outlined"
                                 name="shortDescription"
-                                value={form.shortDescription}
+                                value={postData.shortDescription}
                                 onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
@@ -92,7 +113,7 @@ const AddPost: NextPage<IProps> = () => {
                                 label="Post Content (markdown supported)"
                                 variant="outlined"
                                 name="content"
-                                value={form.content}
+                                value={postData.content}
                                 onChange={(e) => handleChange(e)}
                                 sx={{ width: "100%" }}
                                 required
@@ -121,7 +142,31 @@ const AddPost: NextPage<IProps> = () => {
                         </Grid>
                     </Grid>
                 </form>
-            </Box>
+            </Box>}
+
+            {!session && status !== "loading" &&
+                <Box sx={{ textAlign: "center" }}>
+                    <Typography
+                        variant="h3"
+                        component="h1"
+                        sx={{ mb: 3 }}
+                    >
+                        To publish a post, please register through github
+                    </Typography>
+                    <Button
+                        onClick={() => signIn()}
+                        variant="contained"
+                    >
+                        SignIn
+                    </Button>
+                </Box>
+            }
+
+            {status === "loading" &&
+                <Box sx={{ textAlign: "center" }}>
+                    <CircularProgress size={100} />
+                </Box>
+            }
         </Layout >
     )
 }
