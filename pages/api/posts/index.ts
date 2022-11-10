@@ -23,7 +23,11 @@ async function getPosts(req: NextApiRequest, res: NextApiResponse<any>) {
     try {
         await connectMongo()
 
-        const posts = await Post.find();
+        let params = {}
+
+        if (req.query.email) Object.assign(params, { authorEmail: req.query.email })
+
+        const posts = await Post.find(params)
 
         return res.json({
             data: JSON.parse(JSON.stringify(posts)),

@@ -9,8 +9,7 @@ type IProps = {
 }
 
 const Header: FC<IProps> = () => {
-    const { data: session } = useSession();
-    console.log(session)
+    const { data: session } = useSession()
 
     const handleSignin = () => {
         signIn()
@@ -53,11 +52,13 @@ const Header: FC<IProps> = () => {
                                     alignItems="center"
                                 >
                                     <Grid item>
-                                        <Avatar
-                                            alt={session.user?.name || ""}
-                                            src={session.user?.image || ""}
-                                            sx={{ width: 45, height: 45, mr: 1 }}
-                                        />
+                                        <Link href={`/profile/${session.user?.email}`}>
+                                            <Avatar
+                                                alt={session.user?.name || ""}
+                                                src={session.user?.image || ""}
+                                                sx={{ width: 45, height: 45, mr: 1 }}
+                                            />
+                                        </Link>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={handleSignout} color="primary">
