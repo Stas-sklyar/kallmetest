@@ -1,7 +1,5 @@
-import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
-import connectMongo, { connectToDatabase } from "../../../lib/mongodb";
+import connectMongo from "../../../lib/mongodb";
 import Post from "../../../models/post"
 
 export default async function handler(
