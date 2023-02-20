@@ -34,7 +34,7 @@ async function getPost(req: NextApiRequest, res: NextApiResponse<any>) {
 
     } catch (error) {
         return res.json({
-            message: error ? error?.message : "something went wrong",
+            message: "something went wrong",
             success: false,
         });
     }
