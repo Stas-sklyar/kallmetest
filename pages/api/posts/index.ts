@@ -36,7 +36,7 @@ async function getPosts(req: NextApiRequest, res: NextApiResponse<any>) {
 
     } catch (error) {
         return res.json({
-            message: new Error(error).message,
+            message: "something went wrong",
             success: false,
         });
     }
@@ -63,7 +63,7 @@ async function createPost(req: NextApiRequest, res: NextApiResponse<any>) {
 
     } catch (error) {
         return res.json({
-            message: new Error(error).message,
+            message: "something went wrong",
             success: false,
         });
     }
